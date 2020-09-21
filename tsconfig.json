@@ -1,9 +1,12 @@
 {
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
         "target": "es2017",
         "module": "esnext",
         "moduleResolution": "node",
         "lib": ["es2017", "dom"],
-        "experimentalDecorators": true
-    }
+        "experimentalDecorators": true,
+        "outDir": ".tsc"
+    },
+    "include": ["src"]
 }

@@ -1,6 +1,9 @@
+/.tsc
 /coverage
 /node_modules
 /package-lock.json
-/public/scripts
+/public/js
 /public/service-worker.js
+/src/**/*.js
 /tmp
+*.log

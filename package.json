@@ -4,13 +4,20 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "rimraf public/scripts && rollup -c etc/rollup.production.js",
-        "build:watch": "rollup -c etc/rollup.development.js -w",
+        "build": "rimraf public/js && npm run build:typescript && npm run build:rollup",
+        "build:rollup": "APP_VERSION=$npm_package_version-$(git rev-parse --short HEAD) rollup -c etc/rollup.production.js",
+        "build:rollup:watch": "rollup -c etc/rollup.development.js -w",
+        "build:typescript": "tsc --build tsconfig.json",
+        "build:typescript:watch": "tsc --build tsconfig.json -w",
+        "build:watch": "npm-run-all -p build:typescript:watch build:rollup:watch",
         "commit": "git-cz",
-        "dev": "npm-run-all -p build:watch start",
+        "sourcemap": "source-map-explorer public/js/index.js",
         "service-worker": "node bin/workbox-build.js && rollup -c etc/rollup.service-worker.js && rimraf tmp",
-        "start": "node bin/server.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "server": "node bin/server.js",
+        "start": "npm-run-all -p build:watch server",
+        "start:production": "npm run build && npm run server",
+        "test": "karma start --coverage",
+        "deploy": "npm run build && npm run service-worker && firebase deploy --only hosting"
     },
     "repository": {
         "type": "git",
@@ -46,6 +53,11 @@
         }
     },
     "dependencies": {
+        "@lion/dialog": "^0.8.1",
+        "@lion/fieldset": "^0.14.9",
+        "@lion/form": "^0.6.23",
+        "@lion/input": "^0.9.2",
+        "firebase": "^7.20.0",
         "workbox-window": "^5.0.0"
     }
 }

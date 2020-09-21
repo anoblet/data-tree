@@ -9,7 +9,7 @@ browserSync.init({
     index: 'index.html',
   },
   files: [
-    'public/scripts/**',
+    'public/js/**',
     'public/index.html',
   ],
   middleware: [
